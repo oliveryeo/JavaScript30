@@ -42,7 +42,53 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
 
+  console.log(divs);
+  console.log(button);
+
+  function logText(e) {
+    console.log(this);
+    console.log(this.classList.value); 
+    // REFER to the addEventListener below this function!
+    // This tutorial is all about addEventListener
+
+    // ASSUMING "capture: false" (which is default)
+    // You get three, two and one. Why?
+    // When you click on .three, behind it is .two, and behind it is .one, and behind it is the .bod, and so on. This is the concept of bubbling.
+    // What is console logged, depends on which element has addEventListener('click')
+
+    // THEORY (what happens when you click the page)
+    // What happens first is a capture event → Browser will figure out what you have clicked from top down, from parent to children (e.g. body → div with .one → div with .two → div with .three).
+    // Then a bubble event happens from bottom up, from children to parent → click events fired off from: div with .three → div with .two → all the way up.
+
+    // ASSUMING "capture: true" (manually set)
+    // You get one, two, three! Click events are fired top down!
+
+    // ASSUMING "once: true" (manually set)
+    // Listens for the click once, fire the event once, then unbind itself so that the event will not fire off anymore
+    // This is like div.removeEventListener('click', logText) after the event fired off once.
+    // Event will not run again until the page is refreshed.
+    // Useful if you want a button to be only clicked once. One good example is a store checkout button.
+
+    e.stopPropagation();
+    // This event method will STOP the bubbling event up or capture event down. You can use this to your advantage to fire the event off at a specific element, or control how much bubbling or capturing are there.
+    // You can write an if statement if you want an event to fire off at a specific parent. (e.g. capture: false -- .three and .two only || capture: true -- .one and .two only)
+
+    
+  }
+
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: false,
+    once: true
+  }));
+
+  button.addEventListener('click', () => {
+    console.log('Click!!!');
+  }, {
+    once: true
+  })
 </script>
 </body>
 </html>
