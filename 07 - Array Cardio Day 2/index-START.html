@@ -26,15 +26,59 @@
 
     // Some and Every Checks
     // Array.prototype.some() // is at least one person 19 or older?
+    const isAdult = people.some(function(person) {
+      // Get the current year (e.g. 2023 as of 6/01/2023)
+      const currentYear = (new Date()).getFullYear();
+      // Find the person's age at the current year
+      if (currentYear - person.year >= 19) {
+        return true;
+      }
+    });
+    // If you put curly brackets, it will create an object
+    console.log({isAdult});
+
     // Array.prototype.every() // is everyone 19 or older?
+    const allAdults = people.every(function(person) {
+      // Get the current year (e.g. 2023 as of 6/01/2023)
+      const currentYear = (new Date()).getFullYear();
+      // Find the person's age at the current year
+      if (currentYear - person.year >= 19) {
+        return true;
+      }
+    });
+    console.log({allAdults});
+
 
     // Array.prototype.find()
-    // Find is like filter, but instead returns just the one you are looking for
+    // Find is like filter, but instead returns just the first item it finds
     // find the comment with the ID of 823423
+    // const comment = comments.find(function(comment) {
+    //   if (comment.id === 823423) return true;
+    // });
+
+    const comment = comments.find(comment => comment.id === 823423);
+    console.log(comment);
 
     // Array.prototype.findIndex()
     // Find the comment with this ID
     // delete the comment with the ID of 823423
+    const index = comments.findIndex(comment => comment.id === 823423);
+    console.log(index);
+
+    // comments.splice(index, 1); // Commented to allow below method to run.
+    console.log(comments);
+
+    // Another way to splice and keep old array
+    // Advantage of this method is that you keep the old array
+    const newComments = [
+       ...comments.slice(0, index), // Slice the index 0 element
+       ...comments.slice(index + 1) // Slice from index 2 element onwards
+       // Altogether you have removed index 1.
+       // You need to use the spread syntax (...) because slice() method returns an array. → Leads to array nesting
+       // So by spreading you essentially take the elements out of the array, and place them into the array one level above.
+    ]
+
+    console.log(newComments);
 
   </script>
 </body>
